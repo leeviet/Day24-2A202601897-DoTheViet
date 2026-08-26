@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- API Keys ---
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")  # Keep for compatibility
+GROQ_API_KEY   = os.getenv("GROQ_API_KEY", "")    # Groq API (OpenAI-compatible)
+GROQ_BASE_URL  = "https://api.groq.com/openai/v1"
 HF_TOKEN = os.getenv("HF_TOKEN", "")  # Optional: for HuggingFace models
 
 # --- Qdrant (same as Day 18) ---
@@ -38,7 +40,9 @@ ADVERSARIAL_SET_PATH = os.path.join(os.path.dirname(__file__), "adversarial_set_
 GUARDRAILS_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "guardrails")
 
 # --- LLM Judge ---
-JUDGE_MODEL = "gpt-4o-mini"
+# Dùng Groq nếu có GROQ_API_KEY, fallback về OpenAI
+JUDGE_MODEL = "qwen/qwen3.6-27b"       # Groq model (có sẵn trên plan này)
+NEMO_LLM_MODEL = "groq/compound-mini"  # Model nhỏ cho NeMo rails
 
 # --- Guardrail latency budget ---
 LATENCY_BUDGET_P95_MS = 500  # target: full guard stack P95 < 500ms
